@@ -1,0 +1,7 @@
+group rootProject.group
+version rootProject.version
+
+dependencies {
+    api(libs.spring.boot.starter.data.neo4j)
+    api(libs.spring.boot.starter.data.mongodb)
+}

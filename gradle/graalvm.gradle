@@ -1,0 +1,42 @@
+apply plugin: "org.graalvm.buildtools.native"
+
+graalvmNative {
+    toolchainDetection = false
+    binaries {
+        main {
+            imageName = project.name + "-" + version
+
+            quickBuild = true
+            verbose = true
+            debug = false
+            richOutput = true
+            sharedLibrary = false
+            fallback = false
+
+
+            buildArgs.add("--enable-https")
+            buildArgs.add("--install-exit-handlers")
+            buildArgs.add("--report-unsupported-elements-at-runtime")
+            buildArgs.add("--native-image-info")
+
+            buildArgs.add("--add-opens=java.base/java.nio=ALL-UNNAMED")
+            buildArgs.add("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED")
+            buildArgs.add("--add-opens=java.base/jdk.internal.ref=ALL-UNNAMED")
+
+            buildArgs.add("-H:+UnlockExperimentalVMOptions")
+            buildArgs.add("-H:+InlineBeforeAnalysis")
+            buildArgs.add("-H:+PrintAnalysisCallTree")
+            buildArgs.add("-H:+TraceSecurityServices")
+            buildArgs.add("-H:+BuildReport")
+            buildArgs.add("-H:+AddAllCharsets")
+            buildArgs.add("-H:+ReportExceptionStackTraces")
+            buildArgs.add("-H:-DeleteLocalSymbols")
+            buildArgs.add("-H:+PreserveFramePointer")
+            buildArgs.add("-H:+SourceLevelDebug")
+            buildArgs.add("-H:+StaticExecutableWithDynamicLibC")
+            buildArgs.add("-Dfile.encoding=UTF-8")
+            buildArgs.add("-J-Dfile.encoding=UTF-8")
+            resources.autodetect()
+        }
+    }
+}

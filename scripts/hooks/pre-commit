@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -ex
+
+echo "git hooks pre-commit execute start ..."
+
+BASE_DIR=$(dirname "$0")
+
+cd "$BASE_DIR/../.."
+
+stagedFiles=$(git diff --stagged --name-only)
+
+gradle spotlessJavaApply
+
+for file in $stageFiles; do
+  if test -f "$file"; then
+      git add $file
+  fi
+done
+
+echo "git hooks pre-commit execute end ..."

@@ -1,0 +1,24 @@
+group rootProject.group
+version rootProject.version
+
+dependencies {
+    api project(":newnoa-wheel-entity")
+    // db
+//    implementation(libs.mybatis.spring.boot.starter)
+//    implementation(libs.mysql.connector.j)
+//    implementation(libs.hikari)
+    // cache
+    implementation(libs.caffeine)
+    // embedded neo4j
+    if (neo4jEmbedded == 'true') {
+        println "neo4jEmbedded: implementation"
+        implementation(libs.neo4j)
+        implementation "javax.ws.rs:javax.ws.rs-api:2.1.1"
+        implementation "javax.validation:validation-api:2.0.1.Final"
+        implementation "javax.activation:activation:1.1.1"
+    } else {
+        println "neo4jEmbedded: compileOnly"
+        implementation(libs.neo4j)
+    }
+
+}

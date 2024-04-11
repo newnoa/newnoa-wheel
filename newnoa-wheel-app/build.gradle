@@ -1,0 +1,17 @@
+group rootProject.group
+version rootProject.version
+
+apply from: rootProject.file('gradle/springboot.gradle')
+apply from: rootProject.file('gradle/graalvm.gradle')
+
+dependencies {
+    implementation(libs.bundles.spring.boot.web.server)
+    api project(":newnoa-wheel-core")
+    api project(":newnoa-wheel-entity")
+    api project(":newnoa-wheel-common")
+    if (env != null) {
+        // metrics
+        implementation(libs.bundles.micrometer)
+    }
+}
+

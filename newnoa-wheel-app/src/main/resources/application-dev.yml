@@ -1,0 +1,14 @@
+spring:
+  data:
+    mongodb:
+      database: newnoa
+      host: 192.168.210.201
+      port: 27017
+      username: newnoa
+      password: newnoa
+      authentication-database: admin
+  neo4j:
+    uri: bolt://192.168.210.201:7687
+    authentication:
+      username: neo4j
+      password: neowei

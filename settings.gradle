@@ -1,0 +1,20 @@
+dependencyResolutionManagement {
+    repositories {
+        maven {
+            url "http://nexus.newnoa.com/repository/newnoa/"
+            allowInsecureProtocol = true
+        }
+        gradlePluginPortal()
+    }
+    versionCatalogs {
+        libs {
+            from("com.newnoa:newnoa-library:0.0.17")
+        }
+    }
+}
+rootProject.name = "newnoa-wheel"
+include "newnoa-wheel-entity"
+include "newnoa-wheel-core"
+include "newnoa-wheel-app"
+include "newnoa-wheel-common"
+

@@ -1,0 +1,19 @@
+server:
+  port: 8081
+spring:
+  threads:
+    virtual:
+      enabled: true
+  application:
+    name: neowei-sample-service
+  profiles:
+    active: dev
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
