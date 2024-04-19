@@ -4,4 +4,5 @@ version rootProject.version
 dependencies {
     api(libs.spring.boot.starter.data.neo4j)
     api(libs.spring.boot.starter.data.mongodb)
+    api(libs.bundles.spring.boot.tomcat.websocket)
 }

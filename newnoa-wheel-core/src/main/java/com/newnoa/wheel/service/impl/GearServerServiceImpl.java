@@ -19,7 +19,8 @@ public class GearServerServiceImpl implements GearServerService {
     private GearServerRepository gearServerRepository;
 
     public GearServer create(GearServerDto gearServerDto) {
-        GearServer gearServer = new GearServer(gearServerDto);
-        return gearServerRepository.save(gearServer);
+//        GearServer gearServer = new GearServer(gearServerDto);
+//        return gearServerRepository.save(gearServer);
+        return null;
     }
 }

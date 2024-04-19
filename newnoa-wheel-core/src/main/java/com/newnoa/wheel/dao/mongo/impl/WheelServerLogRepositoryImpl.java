@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Slf4j
-public class WheelServerLogRepositoryImpl extends AbstractNewNoaMongoRepository<WheelServerLog> implements WheelServerLogRepository {
+public class WheelServerLogRepositoryImpl extends AbstractNewNoaMongoRepository<WheelServerLog>
+        implements WheelServerLogRepository {
 
     @Autowired
     private MongoTemplate mongoTemplate;

@@ -1,0 +1,48 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <springProperty scope="context" name="module_name" source="spring.application.name"/>
+    <springProperty scope="context" name="active" source="spring.profiles.active"/>
+
+    <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/${module_name}.log</file>
+        <encoder charset="UTF-8">
+            <pattern>%date - [%level] - from %logger in [%thread] %n%message%n%xException%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/${module_name}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>
+                %highlight(%date) %X{trace_id:-} %clr(|-%-5level){magenta} [%thread] %clr(%logger{10}.%M\(%F:%L\)){cyan} %msg %n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC_LOG_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="LOG_FILE"/>
+    </appender>
+
+    <appender name="ASYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="STDOUT"/>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
+    <!--    <logger name="play" level="INFO"/>-->
+    <!--    <logger name="application" level="INFO"/>-->
+    <!--    <logger name="kafka.manager" level="INFO"/>-->
+
+    <!--    <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF" />-->
+    <!--    <logger name="org.apache.zookeeper" level="INFO"/>-->
+
+    <root level="INFO">
+        <appender-ref ref="ASYNC_LOG_FILE"/>
+        <appender-ref ref="ASYNC_STDOUT"/>
+    </root>
+</configuration>

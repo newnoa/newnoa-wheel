@@ -5,10 +5,13 @@ apply from: rootProject.file('gradle/springboot.gradle')
 apply from: rootProject.file('gradle/graalvm.gradle')
 
 dependencies {
-    implementation(libs.bundles.spring.boot.web.server)
     api project(":newnoa-wheel-core")
     api project(":newnoa-wheel-entity")
-    api project(":newnoa-wheel-common")
+
+    implementation(libs.bundles.spring.boot.tomcat.server)
+    implementation "io.opentelemetry:opentelemetry-exporter-otlp:1.31.0"
+    implementation "io.opentelemetry:opentelemetry-sdk:1.31.0"
+    implementation(libs.opentelemetry.logback.mdc)
     if (env != null) {
         // metrics
         implementation(libs.bundles.micrometer)

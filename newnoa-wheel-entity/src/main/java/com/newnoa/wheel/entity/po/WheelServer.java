@@ -1,6 +1,5 @@
 package com.newnoa.wheel.entity.po;
 
-import java.util.UUID;
 import lombok.Data;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -16,7 +15,7 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
  */
 
 @Data
-@Node("wheel_server")
+@Node("wheelServer")
 public class WheelServer {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
@@ -25,6 +24,7 @@ public class WheelServer {
     private String wheelId;
     private String name;
     private String host;
+    private String ip;
     private Integer port;
     private String os;
     private Integer isOnline;

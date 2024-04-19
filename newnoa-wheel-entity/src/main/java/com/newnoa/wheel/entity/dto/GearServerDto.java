@@ -1,5 +1,6 @@
 package com.newnoa.wheel.entity.dto;
 
+import javax.crypto.SecretKey;
 import lombok.Data;
 
 /**
@@ -10,4 +11,7 @@ import lombok.Data;
  */
 @Data
 public class GearServerDto {
+    private SecretKey secretKey;
+    private String host;
+    private String port;
 }

@@ -1,0 +1,70 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <springProperty scope="context" name="app_name" source="spring.application.name"/>
+    <springProperty scope="context" name="active" source="spring.profiles.active"/>
+
+    <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/${app_name}.log</file>
+        <encoder charset="UTF-8">
+            <pattern>%date - [%level] - from %logger in [%thread] %n%message%n%xException%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/${app_name}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ASYNC_LOG_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="LOG_FILE"/>
+    </appender>
+
+    <appender name="COLLECT_FILE" class="ch.qos.logback.core.ConsoleAppender">
+        <file>./logs/${app_name}.collect</file>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "app": "${app_name}",
+                        "active": "${active}",
+                        "time": "%date{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "level": "%level",
+                        "thread": "%thread",
+                        "pid": "${PID:-}",
+                        "class": "%logger",
+                        "method":"%method",
+                        "line":"%line",
+                        "message":"%message",
+                        "exception": "%exception",
+                        "uid": "%X{uid}",
+                        "traceId": "%X{trace_id:-}",
+                        "spanId": "%X{span_id:-}",
+                        "traceFlags": "%X{trace_flags:-}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_BASE}/${app_name}-%d{yyyy-MM-dd}.log.%i.gz</fileNamePattern>
+            <maxFileSize>1GB</maxFileSize>
+            <maxHistory>5</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ASYNC_COLLECT_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="COLLECT_FILE"/>
+    </appender>
+
+    <!--    <logger name="play" level="INFO"/>-->
+    <!--    <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF" />-->
+    <!--    <logger name="org.apache.zookeeper" level="INFO"/>-->
+
+    <root level="INFO">
+        <appender-ref ref="ASYNC_LOG_FILE"/>
+    </root>
+</configuration>

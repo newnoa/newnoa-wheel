@@ -11,4 +11,19 @@ spring:
     uri: bolt://192.168.210.201:7687
     authentication:
       username: neo4j
-      password: neowei
+      password: gaoyuan210
+#    neo4j:
+#      uri: bolt://localhost:7687
+server:
+  tomcat:
+    accept-count: 10
+    max-connections: 100
+    threads:
+      min-spare: 1
+      max: 16
+logging:
+  config: classpath:logback-dev.xml
+
+opentelemetry:
+  enable: true
+  endpoint: http://192.168.210.221:4317

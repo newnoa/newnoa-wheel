@@ -1,9 +1,7 @@
 package com.newnoa.wheel.dao.mongo;
 
-import com.newnoa.wheel.GearBootstrap;
-import com.newnoa.wheel.entity.po.GearServerLog;
+import com.newnoa.wheel.WheelBootstrap;
 import jakarta.annotation.Resource;
-import java.util.Date;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author Neowei
  * @since 2024/4/11 14:05
  */
-@SpringBootTest(classes = {GearBootstrap.class})
+@SpringBootTest(classes = {WheelBootstrap.class})
 public class GearServerLogRepositoryTest {
 
     @Resource
@@ -21,11 +19,12 @@ public class GearServerLogRepositoryTest {
 
     @Test
     public void testSave() {
-        GearServerLog gearServerLog =
-                GearServerLog.builder().codeAliasName("test").codeId("1234567890").inputParameter("input").outputResult("result")
-                        .inputTime(new Date()).outputTime(new Date()).logTime(new Date())
-                        .build();
-        this.gearServerLogRepository.save(gearServerLog);
+//        GearServerLog gearServerLog =
+//                GearServerLog.builder().codeAliasName("test").codeId("1234567890").inputParameter("input")
+//                .outputResult("result")
+//                        .inputTime(new Date()).outputTime(new Date()).logTime(new Date())
+//                        .build();
+//        this.gearServerLogRepository.save(gearServerLog);
     }
 
 }

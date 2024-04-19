@@ -5,7 +5,7 @@ spring:
     virtual:
       enabled: true
   application:
-    name: neowei-sample-service
+    name: newnoa-wheel-app
   profiles:
     active: dev
 management:

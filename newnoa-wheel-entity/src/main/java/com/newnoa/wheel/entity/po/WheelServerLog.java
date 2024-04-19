@@ -1,7 +1,6 @@
 package com.newnoa.wheel.entity.po;
 
 import java.util.Date;
-import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -11,7 +10,6 @@ import lombok.Data;
  * @since 2024/4/10 12:02
  */
 @Data
-@Builder
 public class WheelServerLog {
     private String id;
     private String registerType;

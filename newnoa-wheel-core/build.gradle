@@ -3,22 +3,46 @@ version rootProject.version
 
 dependencies {
     api project(":newnoa-wheel-entity")
-    // db
-//    implementation(libs.mybatis.spring.boot.starter)
-//    implementation(libs.mysql.connector.j)
-//    implementation(libs.hikari)
     // cache
     implementation(libs.caffeine)
     // embedded neo4j
     if (neo4jEmbedded == 'true') {
         println "neo4jEmbedded: implementation"
-        implementation(libs.neo4j)
-        implementation "javax.ws.rs:javax.ws.rs-api:2.1.1"
-        implementation "javax.validation:validation-api:2.0.1.Final"
-        implementation "javax.activation:activation:1.1.1"
+        implementation(libs.neo4j) {
+            exclude group: "org.neo4j", module: "neo4j-slf4j-provider"
+            exclude group: "org.eclipse.jetty"
+            exclude group: "org.eclipse.jetty.http2"
+            exclude group: "org.glassfish.jersey.inject"
+            exclude group: "org.glassfish.jersey.containers"
+            exclude group: "org.glassfish.jaxb"
+        }
+        implementation("javax.activation:activation:1.1.1")
+        implementation("javax.ws.rs:javax.ws.rs-api:2.1.1")
+        implementation("javax.validation:validation-api:2.0.1.Final")
+        implementation("javax.activation:activation:1.1.1")
+        implementation("javax.servlet:javax.servlet-api:4.0.1")
     } else {
         println "neo4jEmbedded: compileOnly"
-        implementation(libs.neo4j)
+        compileOnly(libs.neo4j) {
+            exclude group: "org.neo4j"
+            exclude group: "org.eclipse.jetty"
+            exclude group: "org.eclipse.jetty.http2"
+            exclude group: "org.glassfish.jersey.inject"
+            exclude group: "org.glassfish.jersey.containers"
+            exclude group: "org.glassfish.jaxb"
+            exclude group: "jakarta.xml.bind"
+            exclude group: "com.fasterxml.jackson.jaxrs"
+        }
+        compileOnly("org.neo4j:neo4j-ssl:5.19.0") {
+            exclude group: "org.apache.logging.log4j"
+            exclude group: "org.apache.commons"
+        }
+        compileOnly("org.neo4j:neo4j-graphdb-api:5.19.0") {
+            exclude group: "org.apache.commons"
+        }
+        compileOnly("org.neo4j:neo4j-common:5.19.0") {
+            exclude group: "org.apache.commons"
+        }
     }
 
 }

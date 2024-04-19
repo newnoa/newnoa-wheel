@@ -1,11 +1,7 @@
 package com.newnoa.wheel.entity.po;
 
-import java.util.UUID;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Relationship;
 import org.springframework.data.neo4j.core.schema.RelationshipId;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
@@ -16,7 +12,6 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
  * @since 2024/4/10 11:01
  */
 @Data
-@Builder
 public class WheelGearRelationShip {
 
     @RelationshipId

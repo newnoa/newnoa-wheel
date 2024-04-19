@@ -8,7 +8,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         libs {
-            from("com.newnoa:newnoa-library:0.0.17")
+            from("com.newnoa:newnoa-library:0.0.31")
         }
     }
 }
@@ -16,5 +16,4 @@ rootProject.name = "newnoa-wheel"
 include "newnoa-wheel-entity"
 include "newnoa-wheel-core"
 include "newnoa-wheel-app"
-include "newnoa-wheel-common"
 

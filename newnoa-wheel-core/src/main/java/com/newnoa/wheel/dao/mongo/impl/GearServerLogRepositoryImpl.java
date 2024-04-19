@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Slf4j
-public class GearServerLogRepositoryImpl extends AbstractNewNoaMongoRepository<GearServerLog> implements GearServerLogRepository {
+public class GearServerLogRepositoryImpl extends AbstractNewNoaMongoRepository<GearServerLog>
+        implements GearServerLogRepository {
 
     @Autowired
     private MongoTemplate mongoTemplate;

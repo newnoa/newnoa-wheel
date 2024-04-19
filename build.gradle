@@ -23,36 +23,15 @@ println "version: ${version}"
 ext.env = hasProperty("env") ? property("env") : null
 println "${project.name} env: ${env}"
 ext.neo4jEmbedded = hasProperty("neo4jEmbedded") ? property("neo4jEmbedded") : 'false'
-
-allprojects {
-    configurations.all {
-        //刷新本地缓存包
-        resolutionStrategy.cacheDynamicVersionsFor 0, "seconds"
-        resolutionStrategy.cacheChangingModulesFor 300, "seconds"
-        resolutionStrategy {
-            force libs.spring.boot.starter.parent
-            force libs.spring.cloud.dependencies
-            force libs.junit.bom
-            force libs.jackson.bom
-            force libs.log4j.core
-            force libs.log4j.layout.template.json
-            force libs.byte.buddy
-            force libs.byte.buddy.agent
-            force "org.ow2.asm:asm:9.6"
-        }
-    }
-}
-
-
 subprojects {
     apply plugin: "idea"
     apply plugin: "java"
     apply plugin: "java-library"
     apply plugin: "org.sonarqube"
-//    apply plugin: "com.github.spotbugs-base"
     apply plugin: "org.owasp.dependencycheck"
     apply plugin: "io.spring.dependency-management"
 
+    apply from: rootProject.file("gradle/jacoco.gradle")
     apply from: rootProject.file("gradle/test.gradle")
 
     if (env == 'dev' || env == 'sit') {
@@ -60,7 +39,6 @@ subprojects {
         apply from: rootProject.file("gradle/checkstyle.gradle")
         apply from: rootProject.file("gradle/pmd.gradle")
         apply from: rootProject.file("gradle/spotbugs.gradle")
-        apply from: rootProject.file("gradle/jacoco.gradle")
         apply from: rootProject.file("gradle/sonarqube.gradle")
         apply from: rootProject.file("gradle/smart-doc.gradle")
     }
@@ -75,13 +53,17 @@ subprojects {
     dependencies {
         implementation platform(libs.jackson.bom)
         implementation platform(libs.spring.boot.starter.parent)
+        implementation platform(libs.spring.boot.dependencies)
         implementation platform(libs.spring.cloud.dependencies)
         testImplementation platform(libs.junit.bom)
         testImplementation(libs.junit.jupiter.api)
         testRuntimeOnly(libs.junit.jupiter.engine)
+
         testImplementation(libs.junit.platform.runner) {
             exclude group: "junit", module: "junit"
         }
+        testRuntimeClasspath(libs.junit.platform.launcher)
+        testRuntimeClasspath(libs.junit.platform.console)
         testImplementation(libs.spotbugs.annotations)
         testImplementation(libs.spring.boot.starter.test)
         compileOnly(libs.lombok)
@@ -93,11 +75,10 @@ subprojects {
 
         implementation(libs.bundles.spring.boot.starter.slf4j.logback)
         implementation(libs.bundles.jackson)
-        implementation(libs.byte.buddy)
-        implementation(libs.byte.buddy.agent)
-        implementation(libs.bundles.jakarta)
+        implementation(libs.jakarta.transaction.api)
         implementation(libs.joda.time)
         implementation(libs.guava)
+        implementation files("D:/newnoa/newnoa-common/build/libs/newnoa-common.jar")
     }
 
     java {
@@ -116,12 +97,48 @@ subprojects {
         options.compilerArgs.add("--add-exports=java.desktop/sun.awt=ALL-UNNAMED")
         options.compilerArgs.add("--add-exports=java.desktop/sun.font=ALL-UNNAMED")
     }
+}
 
-    compileTestJava {
-        options.encoding = "UTF-8"
-    }
-
-    javadoc {
-        options.encoding = "UTF-8"
+allprojects {
+    configurations.all {
+        //刷新本地缓存包
+//        resolutionStrategy.cacheDynamicVersionsFor 0, "seconds"
+//        resolutionStrategy.cacheChangingModulesFor 300, "seconds"
+        resolutionStrategy {
+            force "org.apiguardian:apiguardian-api:1.1.2"
+            force "com.google.errorprone:error_prone_annotations:2.26.1"
+            force "org.checkerframework:checker-qual:3.42.0"
+            force "org.jboss.logging:jboss-logging:3.5.3.Final"
+            force "com.fasterxml:classmate:1.6.0"
+            force "io.projectreactor:reactor-core:3.6.4"
+            force "org.hamcrest:hamcrest:2.2"
+            force libs.byte.buddy
+            force libs.byte.buddy.agent
+            if (neo4jEmbedded == 'true') {
+                force "com.google.protobuf:protobuf-java:3.25.1"
+                force "commons-codec:commons-codec:1.16.1"
+                force "org.apache.commons:commons-configuration2:2.10.1"
+                force "org.apache.commons:commons-lang3:3.14.0"
+                force "org.scala-lang:scala-library:2.13.10"
+                force "org.checkerframework:checker-qual:3.42.0"
+                force "org.ow2.asm:asm:9.6"
+                force "io.netty:netty-buffer:4.1.107.Final"
+                force "io.netty:netty-common:4.1.107.Final"
+                force "io.netty:netty-transport-native-unix-common:4.1.107.Final"
+                force "io.netty:netty-handler:4.1.107.Final"
+                force "io.netty:netty-handler-proxy:4.1.107.Final"
+                force "io.netty:netty-transport:4.1.107.Final"
+                force "io.netty:netty-codec-http2:4.1.107.Final"
+                force "com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.17.0"
+                force "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.17.0"
+                force "com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.17.0"
+                force libs.jakarta.ws.rs.api
+                force libs.jakarta.activation.api
+                force libs.jakarta.xml.bind.api
+                force libs.log4j.core
+                force libs.log4j.layout.template.json
+            }
+            failOnVersionConflict()
+        }
     }
 }
